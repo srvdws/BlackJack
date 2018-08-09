@@ -18,8 +18,7 @@ class Card():
         self.rank = rank
 
     def __repr__(self):
-        return('{} of {}'.format(self.suit, self.rank))
-
+        return '{} of {}'.format(self.suit, self.rank)
 
 
 class Deck():
@@ -40,6 +39,7 @@ class Deck():
 
     def deal(self):
         return self.deck.pop()
+
 
 play_deck = Deck()
 

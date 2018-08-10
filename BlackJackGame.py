@@ -6,13 +6,12 @@ import random
 
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs ')
 ranks = ('Two ', 'Three ', 'Four', 'Five', 'Six ', 'Seven ', 'Eight ', 'Nine', 'Ten ', 'Jack', 'Queen ', 'King', 'Ace ')
-values = {'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10, 'Ace': 11}
+values = {'Two ': 2, 'Three ': 3, 'Four': 4, 'Five': 5, 'Six ': 6, 'Seven ': 7, 'Eight ': 8, 'Nine': 9, 'Ten ': 10, 'Jack': 10, 'Queen ': 10, 'King': 10, 'Ace ': 11}
 
 playing = True
 
 
 class Card():
-
     def __init__(self, rank, suit, number):
         self.number = number
         self.suit = suit
@@ -24,9 +23,7 @@ class Card():
         return ''.join(self.card)
 
 
-
 class Deck():
-
     def __init__(self):
         self.deck = []
         n = 0
@@ -46,6 +43,34 @@ class Deck():
 
     def deal(self):
         return self.deck.pop()
+
+
+class Hand():
+    def __init__(self):
+        self.cards = []
+        self.value = 0
+        self.aces = 0
+        self.new_card = []
+
+    def add_card(self):
+        self.new_card = play_deck.deal()
+        if self.new_card[1] == 'Ace ':
+            ace_value = None
+            while ace_value != 1 and ace_value != 11:
+                ace_value = int(input('Choose 1 or 11:\n'))
+                self.value += ace_value
+        else:
+            self.value += values[str(self.new_card[1])]
+
+        self.cards.append(self.new_card)
+
+    def __str__(self):
+        print('\nYour hand is:\n')
+        return self.cards
+
+
+#class Chips():
+ #   def __init__(self):
 
 
 def print_card(card):
@@ -88,8 +113,8 @@ def print_card(card):
 
 
     if card[3] == 'Hearts':
-        print('|           ^^ |')
-        print('|           \/ |')
+        print('|         /\/\ |')
+        print('|          \/  |')
     elif card[3] == 'Diamonds':
         print('|           /\ |')
         print('|           \/ |')
@@ -107,6 +132,16 @@ play_deck = Deck()
 print(play_deck.deck)
 print(play_deck.shuffle())
 #print(''.join(play_deck.deal()[1:]))
-print_card(play_deck.deal())
+
+#print_card(play_deck.deal())
+
+my_hand = Hand()
+
+my_hand.add_card()
+my_hand.add_card()
 
 
+for i in range(0, len(my_hand.cards)):
+    print(print_card(my_hand.cards[i]))
+
+print(my_hand.value)

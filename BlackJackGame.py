@@ -60,8 +60,6 @@ class Hand():
                 try:
                     while ace_value != 1 and ace_value != 11:
                         ace_value = int(input('Choose 1 or 11:\n'))
-
-
                     break
                 except:
                     print('Enter a valid integer')
@@ -72,21 +70,16 @@ class Hand():
         self.cards.append(self.new_card)
 
 
-
-
-
 class Chips():
     def __init__(self):
         self.total = 100
         self.bet = 0
 
     def win_bet(self):
-        self.total += self.bet * 2
+        self.total += (self.bet * 2)
 
     def lose_bet(self):
         self.total -= self.bet
-
-
 
 
 def print_card(card):
@@ -127,7 +120,6 @@ def print_card(card):
     print('|', ' ' * int(5 - (len(card[3]) / 2)), card[3], ' ' * int(5 - (len(card[3]) / 2)), '|')
     print('|              |')
 
-
     if card[3] == 'Hearts':
         print('|         /\/\ |')
         print('|          \/  |')
@@ -145,18 +137,17 @@ def print_card(card):
 
 
 def take_bet():
-    bet_amount = 0
+    bet_amount = player_chips.total+1
     print('\nYou have ', player_chips.total, 'Chips.')
-    while True and bet_amount < player_chips.total:
+    while True:
         try:
-            bet_amount = int(input('Place your bet:\n'))
-            return bet_amount
-
+            while bet_amount > player_chips.total:
+                bet_amount = int(input('Place your bet:\n'))
+            break
         except:
             print('Please enter a valid amount')
-    else:
-        print('insufficient funds')
-        take_bet()
+    return bet_amount
+
 
 
 play_deck = Deck()

@@ -60,11 +60,12 @@ class Hand():
                 try:
                     while ace_value != 1 and ace_value != 11:
                         ace_value = int(input('Choose 1 or 11:\n'))
-                        self.value += ace_value
-                        break
+
+
                     break
                 except:
                     print('Enter a valid integer')
+            self.value += ace_value
         else:
             self.value += values[str(self.new_card[1])]
 

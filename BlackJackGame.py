@@ -136,17 +136,25 @@ def print_card(card):
     print('|______________|')
 
 
+def print_hand(hand):
+    for i in range(0, len(hand)):
+        print_card(hand[i])
+
+
 def take_bet():
-    bet_amount = player_chips.total+1
+    bet_amount = 0
     print('\nYou have ', player_chips.total, 'Chips.')
     while True:
         try:
-            while bet_amount > player_chips.total:
+            while bet_amount <= 0 or bet_amount > player_chips.total:
                 bet_amount = int(input('Place your bet:\n'))
             break
+
         except:
             print('Please enter a valid amount')
     return bet_amount
+
+
 
 
 
@@ -159,15 +167,19 @@ print(play_deck.shuffle())
 
 #print_card(play_deck.deal())
 
-my_hand = Hand()
+player_hand = Hand()
+Dealer_hand = Hand()
 
-my_hand.add_card()
-my_hand.add_card()
+player_hand.add_card()
+player_hand.add_card()
 
+print_hand(player_hand.cards)
+print(player_hand.value)
 
-for i in range(0, len(my_hand.cards)):
-    print_card(my_hand.cards[i])
+player_hand.add_card()
 
-print(my_hand.value)
+print_hand(player_hand.cards)
+print(player_hand.value)
 
 print(take_bet())
+

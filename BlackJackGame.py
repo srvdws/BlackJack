@@ -13,23 +13,29 @@ playing = True
 
 class Card():
 
-    def __init__(self, suit, rank):
+    def __init__(self, rank, suit, number):
+        self.number = number
         self.suit = suit
         self.rank = rank
+        self.card = []
+        self.card = [number, self.rank, ' of ', self.suit]
 
     def __repr__(self):
-        return '{} of {}'.format(self.suit, self.rank)
+        return ''.join(self.card)
+
 
 
 class Deck():
 
     def __init__(self):
         self.deck = []
+        n = 0
         for suit in suits:
             for rank in ranks:
-                play_card = Card(rank, suit)
-                print(play_card)
-                self.deck.append(play_card)
+                n += 1
+                play_card = Card(rank, suit, n)
+                print(play_card.card)
+                self.deck.append(play_card.card)
 
     def __str__(self):
         return self.deck

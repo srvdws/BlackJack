@@ -94,8 +94,8 @@ def print_card(card):
         print('|           /\ |')
         print('|           \/ |')
     elif card[3] == 'Spades':
-        print('|          <^> |')
-        print('|           |  |')
+        print('|          / \ |')
+        print('|           ^  |')
     elif card[3] == 'Clubs ':
         print('|          oºo |')
         print('|           |  |')
@@ -106,7 +106,7 @@ play_deck = Deck()
 
 print(play_deck.deck)
 print(play_deck.shuffle())
-print(''.join(play_deck.deal()[1:]))
+#print(''.join(play_deck.deal()[1:]))
 print_card(play_deck.deal())
 
 

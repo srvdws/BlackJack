@@ -51,13 +51,56 @@ class Deck():
 def print_card(card):
     print(' ______________')
     print('|              |')
+
+    if card[1] == 'Two ':
+        print('| 2            |')
+    elif card[1] == 'Three ':
+        print('| 3            |')
+    elif card[1] == 'Four':
+        print('| 4            |')
+    elif card[1] == 'Five':
+        print('| 5            |')
+    elif card[1] == 'Six ':
+        print('| 6            |')
+    elif card[1] == 'Seven ':
+        print('| 7            |')
+    elif card[1] == 'Eight ':
+        print('| 8            |')
+    elif card[1] == 'Nine':
+        print('| 9            |')
+    elif card[1] == 'Ten ':
+        print('| 10           |')
+    elif card[1] == 'Jack':
+        print('| J            |')
+    elif card[1] == 'Queen ':
+        print('| Q            |')
+    elif card[1] == 'King':
+        print('| K            |')
+    elif card[1] == 'Ace ':
+        print('| A            |')
+
+    print('|              |')
     print('|              |')
     print('|', ' ' * int(5 - (len(card[1]) / 2)), card[1], ' ' * int(5 - (len(card[1]) / 2)), '|')
     print('|', ' ' * int(5 - (len(card[2]) / 2)), card[2], ' ' * int(5 - (len(card[2]) / 2)), '|')
     print('|', ' ' * int(5 - (len(card[3]) / 2)), card[3], ' ' * int(5 - (len(card[3]) / 2)), '|')
     print('|              |')
-    print('|              |')
-    print(' ______________')
+
+
+    if card[3] == 'Hearts':
+        print('|           ^^ |')
+        print('|           \/ |')
+    elif card[3] == 'Diamonds':
+        print('|           /\ |')
+        print('|           \/ |')
+    elif card[3] == 'Spades':
+        print('|          <^> |')
+        print('|           |  |')
+    elif card[3] == 'Clubs ':
+        print('|          oºo |')
+        print('|           |  |')
+
+    print('|______________|')
 
 play_deck = Deck()
 

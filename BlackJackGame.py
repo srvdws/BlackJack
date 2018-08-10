@@ -56,21 +56,32 @@ class Hand():
         self.new_card = play_deck.deal()
         if self.new_card[1] == 'Ace ':
             ace_value = None
-            while ace_value != 1 and ace_value != 11:
+            while ace_value != 1 and ace_value != 11 and type(ace_value) == int:
                 ace_value = int(input('Choose 1 or 11:\n'))
                 self.value += ace_value
+                break
+
         else:
             self.value += values[str(self.new_card[1])]
 
         self.cards.append(self.new_card)
 
-    def __str__(self):
-        print('\nYour hand is:\n')
-        return self.cards
 
 
-#class Chips():
- #   def __init__(self):
+
+
+class Chips():
+    def __init__(self):
+        self.total = 100
+        self.bet = 0
+
+    def win_bet(self):
+        self.total += self.bet * 2
+
+    def lose_bet(self):
+        self.total -= self.bet
+
+
 
 
 def print_card(card):
@@ -127,7 +138,24 @@ def print_card(card):
 
     print('|______________|')
 
+
+def take_bet():
+    bet_amount = 0
+    print('\nYou have ', player_chips.total, 'Chips.')
+    while True and bet_amount < player_chips.total:
+        try:
+            bet_amount = int(input('Place your bet:\n'))
+            return bet_amount
+
+        except:
+            print('Please enter a valid amount')
+    else:
+        print('insufficient funds')
+        take_bet()
+
+
 play_deck = Deck()
+player_chips = Chips()
 
 print(play_deck.deck)
 print(play_deck.shuffle())
@@ -142,6 +170,8 @@ my_hand.add_card()
 
 
 for i in range(0, len(my_hand.cards)):
-    print(print_card(my_hand.cards[i]))
+    print_card(my_hand.cards[i])
 
 print(my_hand.value)
+
+print(take_bet())

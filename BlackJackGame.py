@@ -136,18 +136,18 @@ def print_card(card):
     print('|______________|')
 
 
-def print_blank_card(card):
+def print_blank_card():
     print(' ______________')
-    print('|              |')
-    print('|xxxxxxxxxxxxxx|')
-    print('|xxxxxxxxxxxxxx|')
-    print('|xxxxxxxxxxxxxx|')
-    print('|xxxxxxxxxxxxxx|')
-    print('|xxxxxxxxxxxxxx|')
-    print('|xxxxxxxxxxxxxx|')
-    print('|xxxxxxxxxxxxxx|')
-    print('|xxxxxxxxxxxxxx|')
-    print('|xxxxxxxxxxxxxx|')
+    print('|xoooxooooooooo|')
+    print('|0x0x000000000x|')
+    print('|ooxoooooooooxo|')
+    print('|0x0x0000000x00|')
+    print('|xoooxoooooxooo|')
+    print('|00000x000x0000|')
+    print('|ooooooxoxooooo|')
+    print('|0000000x000000|')
+    print('|ooooooxooxoooo|')
+    print('|00000x000x0000|')
     print('|______________|')
 
 

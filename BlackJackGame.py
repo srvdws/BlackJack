@@ -136,6 +136,21 @@ def print_card(card):
     print('|______________|')
 
 
+def print_blank_card(card):
+    print(' ______________')
+    print('|              |')
+    print('|xxxxxxxxxxxxxx|')
+    print('|xxxxxxxxxxxxxx|')
+    print('|xxxxxxxxxxxxxx|')
+    print('|xxxxxxxxxxxxxx|')
+    print('|xxxxxxxxxxxxxx|')
+    print('|xxxxxxxxxxxxxx|')
+    print('|xxxxxxxxxxxxxx|')
+    print('|xxxxxxxxxxxxxx|')
+    print('|xxxxxxxxxxxxxx|')
+    print('|______________|')
+
+
 def print_hand(hand):
     for i in range(0, len(hand)):
         print_card(hand[i])

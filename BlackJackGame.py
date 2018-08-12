@@ -54,19 +54,6 @@ class Hand():
 
     def add_card(self):
         self.new_card = play_deck.deal()
-        if self.new_card[1] == 'Ace ':
-            ace_value = None
-            while True:
-                try:
-                    while ace_value != 1 and ace_value != 11:
-                        ace_value = int(input('Choose 1 or 11:\n'))
-                    break
-                except:
-                    print('Enter a valid integer')
-            self.value += ace_value
-        else:
-            self.value += values[str(self.new_card[1])]
-
         self.cards.append(self.new_card)
 
 
@@ -138,16 +125,16 @@ def print_card(card):
 
 def print_blank_card(card):
     print(' ______________')
-    print('|xoooxooooooooo|')
-    print('|0x0x000000000x|')
-    print('|ooxoooooooooxo|')
-    print('|0x0x0000000x00|')
-    print('|xoooxoooooxooo|')
-    print('|00000x000x0000|')
-    print('|ooooooxoxooooo|')
-    print('|0000000x000000|')
-    print('|ooooooxooxoooo|')
-    print('|00000x000x0000|')
+    print('|              |')
+    print('|/\/\/\/\/\/\/\|')
+    print('|\/\/\/\/\/\/\/|')
+    print('|/\/\/\/\/\/\/\|')
+    print('|\/\/\/\/\/\/\/|')
+    print('|/\/\/\/\/\/\/\|')
+    print('|\/\/\/\/\/\/\/|')
+    print('|/\/\/\/\/\/\/\|')
+    print('|\/\/\/\/\/\/\/|')
+    print('|/\/\/\/\/\/\/\|')
     print('|______________|')
 
 
@@ -179,33 +166,73 @@ def take_bet():
     return bet_amount
 
 
+#ef hit():
+
+
+def player_hit(handvalue):
+    if handvalue < 21:
+        hityn = None
+        while hityn != 'y'.upper() and hityn != 'n'.upper():
+            hityn = str(input(print('Hit? (y/n): '))).upper()
+            if hityn == 'y'.upper():
+                new_card = player_hand.add_card()
+                if new_card[1] == 'Ace ':
+                    ace_value = None
+                    while True:
+                        try:
+                            while ace_value != 1 and ace_value != 11:
+                                ace_value = int(input('Choose 1 or 11:\n'))
+                            break
+                        except:
+                            print('Enter a valid integer')
+                    handvalue += ace_value
+                else:
+                    handvalue += values[str(new_card[1])]
+            else:
+                print('No hit')
+
+
+def dealer_hit(handvalue):
+    if handvalue <= 17 and handvalue < 21:
+        dealer_hand.add_card()
 
 
 
-play_deck = Deck()
-player_chips = Chips()
+while True:
 
-print(play_deck.deck)
-print(play_deck.shuffle())
-#print(''.join(play_deck.deal()[1:]))
+    play_deck = Deck()
+    play_deck.shuffle()
 
-#print_card(play_deck.deal())
+    player_hand = Hand()
+    dealer_hand = Hand()
 
-player_hand = Hand()
-Dealer_hand = Hand()
+    player_chips = Chips()
 
-player_hand.add_card()
-player_hand.add_card()
+    #round_bet = take_bet()
 
-print_player_hand(player_hand.cards)
-print(player_hand.value)
 
-player_hand.add_card()
+    dealer_hand.add_card()
+    print(print_dealer_hand(dealer_hand.cards))
 
-print_player_hand(player_hand.cards)
-print(player_hand.value)
+    player_hand.add_card()
+    print(print_player_hand(player_hand.cards))
 
-print(take_bet())
+    dealer_hand.add_card()
+    print(print_dealer_hand(dealer_hand.cards))
 
-print('DEBUG: dealer hand')
-print_dealer_hand(player_hand.cards)
+    player_hand.add_card()
+    print(print_player_hand(player_hand.cards))
+#player_hand.add_card()
+#player_hand.add_card()
+
+#print_player_hand(player_hand.cards)
+#print(player_hand.value)
+
+#player_hand.add_card()
+
+#print_player_hand(player_hand.cards)
+#print(player_hand.value)
+
+#print(take_bet())
+
+    break

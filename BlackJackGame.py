@@ -136,7 +136,7 @@ def print_card(card):
     print('|______________|')
 
 
-def print_blank_card():
+def print_blank_card(card):
     print(' ______________')
     print('|xoooxooooooooo|')
     print('|0x0x000000000x|')
@@ -151,9 +151,18 @@ def print_blank_card():
     print('|______________|')
 
 
-def print_hand(hand):
+def print_player_hand(hand):
     for i in range(0, len(hand)):
         print_card(hand[i])
+
+
+def print_dealer_hand(hand):
+    for i in range(0, len(hand)):
+        if i == 0:
+            print_blank_card(hand[i])
+
+        else:
+            print_card(hand[i])
 
 
 def take_bet():
@@ -188,13 +197,15 @@ Dealer_hand = Hand()
 player_hand.add_card()
 player_hand.add_card()
 
-print_hand(player_hand.cards)
+print_player_hand(player_hand.cards)
 print(player_hand.value)
 
 player_hand.add_card()
 
-print_hand(player_hand.cards)
+print_player_hand(player_hand.cards)
 print(player_hand.value)
 
 print(take_bet())
 
+print('DEBUG: dealer hand')
+print_dealer_hand(player_hand.cards)

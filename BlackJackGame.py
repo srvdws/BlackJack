@@ -176,18 +176,18 @@ def player_hit(handvalue):
             hityn = str(input(print('Hit? (y/n): '))).upper()
             if hityn == 'y'.upper():
                 new_card = player_hand.add_card()
-                if new_card[1] == 'Ace ':
-                    ace_value = None
-                    while True:
-                        try:
-                            while ace_value != 1 and ace_value != 11:
-                                ace_value = int(input('Choose 1 or 11:\n'))
-                            break
-                        except:
-                            print('Enter a valid integer')
-                    handvalue += ace_value
-                else:
-                    handvalue += values[str(new_card[1])]
+                #if new_card[1] == 'Ace ':
+                    #ace_value = None
+                    #while True:
+                     #   try:
+                      #      while ace_value != 1 and ace_value != 11:
+                       #         ace_value = int(input('Choose 1 or 11:\n'))
+                        #    break
+                        #except:
+                        #    print('Enter a valid integer')
+                    #handvalue += ace_value
+                #else:
+                 #   handvalue += values[str(new_card[1])]
             else:
                 print('No hit')
 
@@ -196,6 +196,17 @@ def dealer_hit(handvalue):
     if handvalue <= 17 and handvalue < 21:
         dealer_hand.add_card()
 
+
+def check_ace():
+    ace_value = None
+    while True:
+        try:
+            while ace_value != 1 and ace_value != 11:
+                ace_value = int(input('Choose 1 or 11:\n'))
+            break
+        except:
+            print('Enter a valid integer')
+    return ace_value
 
 
 while True:
@@ -208,20 +219,24 @@ while True:
 
     player_chips = Chips()
 
-    #round_bet = take_bet()
+    round_bet = take_bet()
 
 
     dealer_hand.add_card()
-    print(print_dealer_hand(dealer_hand.cards))
+    print_dealer_hand(dealer_hand.cards)
 
     player_hand.add_card()
-    print(print_player_hand(player_hand.cards))
+    print_player_hand(player_hand.cards)
 
     dealer_hand.add_card()
-    print(print_dealer_hand(dealer_hand.cards))
+    print_dealer_hand(dealer_hand.cards)
 
     player_hand.add_card()
-    print(print_player_hand(player_hand.cards))
+    print_player_hand(player_hand.cards)
+
+
+
+
 #player_hand.add_card()
 #player_hand.add_card()
 

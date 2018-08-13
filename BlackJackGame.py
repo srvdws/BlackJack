@@ -12,15 +12,19 @@ playing = True
 
 
 class Card():
-    def __init__(self, rank, suit, number):
+    def __init__(self, rank, suit, number, value):
         self.number = number
         self.suit = suit
         self.rank = rank
         self.card = []
-        self.card = [number, self.rank, ' of ', self.suit]
+        self.value = value
+        self.card = [number, self.rank, ' of ', self.suit, self.value]
+
 
     def __repr__(self):
         return ''.join(self.card)
+
+
 
 
 class Deck():
@@ -29,8 +33,9 @@ class Deck():
         n = 0
         for suit in suits:
             for rank in ranks:
+                #print('DEBUG: ', rank)
                 n += 1
-                play_card = Card(rank, suit, n)
+                play_card = Card(rank, suit, n, (values[rank]))
                 #print(play_card.card)
                 self.deck.append(play_card.card)
 
@@ -223,20 +228,22 @@ while True:
 
     round_count = 0
 
-    while True
+    while True:
         dealer_hand.add_card()
-        dealer_hand.value += dealer_check_ace(dealer_hand.cards[round_count])
+        dealer_hand.value += int(dealer_check_ace(dealer_hand.cards[round_count]))
+        print('DEALER HAND:')
         print_dealer_hand(dealer_hand.cards)
 
         player_hand.add_card()
-        player_hand.value += check_ace(player_hand.cards[round_count])
+        player_hand.value += int(check_ace(player_hand.cards[round_count]))
+        print('PLAYER HAND:')
         print_player_hand(player_hand.cards)
 
         round_count += 1
 
         if round_count > 1:
-            player_hit()
-            dealer_hit()
+            player_hit(player_hand.value)
+            dealer_hit(dealer_hand.value)
 
         if round_count == 4:
             break

@@ -1,24 +1,3 @@
-class Hand():
-    def __init__(self):
-        self.cards = []
-        self.value = 0
-        self.aces = 0
-        self.new_card = []
+values = {'Two ': 2, 'Three ': 3, 'Four': 4, 'Five': 5, 'Six ': 6, 'Seven ': 7, 'Eight ': 8, 'Nine': 9, 'Ten ': 10, 'Jack': 10, 'Queen ': 10, 'King': 10, 'Ace ': 11}
 
-    def add_card(self):
-        self.new_card = play_deck.deal()
-        if self.new_card[1] == 'Ace ':
-            ace_value = None
-            while True:
-                try:
-                    while ace_value != 1 and ace_value != 11:
-                        ace_value = int(input('Choose 1 or 11:\n'))
-                        self.value += ace_value
-
-                    break
-                except:
-                    print('Enter a valid integer')
-        else:
-            self.value += values[str(self.new_card[1])]
-
-        self.cards.append(self.new_card)
+print(values['Queen '])

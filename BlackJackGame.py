@@ -197,8 +197,6 @@ def check_ace(card):
             except:
                 print('Enter a valid integer')
         return ace_value
-    else:
-        return card[4]
 
 
 def dealer_check_ace(card):
@@ -207,8 +205,7 @@ def dealer_check_ace(card):
             return 11
         else:
             return 1
-    else:
-        return card[4]
+
 
 
 game_state = True

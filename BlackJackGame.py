@@ -172,14 +172,13 @@ def take_bet():
 
 
 def player_hit(handvalue):
-    if handvalue < 21:
-        hityn = None
-        while hityn != 'y'.upper() and hityn != 'n'.upper():
-            hityn = str(input(print('Hit? (y/n): '))).upper()
-            if hityn == 'y'.upper():
-                player_hand.add_card()
-            else:
-                print('No hit')
+    hityn = None
+    while hityn != 'y'.upper() and hityn != 'n'.upper():
+        hityn = str(input(print('Hit? (y/n): '))).upper()
+        if hityn == 'y'.upper():
+            player_hand.add_card()
+        else:
+            print('No hit')
 
 
 def dealer_hit(handvalue):
@@ -231,21 +230,26 @@ while True:
     while True:
         dealer_hand.add_card()
         dealer_hand.value += int(dealer_check_ace(dealer_hand.cards[round_count]))
-        print('DEALER HAND:')
+        print('DEALER HAND: ROUND {}'.format(round_count))
         print_dealer_hand(dealer_hand.cards)
+        print(dealer_hand.value)
 
         player_hand.add_card()
         player_hand.value += int(check_ace(player_hand.cards[round_count]))
-        print('PLAYER HAND:')
+        print('PLAYER HAND: ROUND {}'.format(round_count))
         print_player_hand(player_hand.cards)
+        print(player_hand.value)
 
         round_count += 1
 
-        if round_count > 1:
+        while round_count > 1:
             player_hit(player_hand.value)
             dealer_hit(dealer_hand.value)
+            round_count += 1
 
-        if round_count == 4:
+            if round_count == 4:
+                break
+        if round_count > 4:
             break
 
 

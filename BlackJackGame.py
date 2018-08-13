@@ -31,7 +31,7 @@ class Deck():
             for rank in ranks:
                 n += 1
                 play_card = Card(rank, suit, n)
-                print(play_card.card)
+                #print(play_card.card)
                 self.deck.append(play_card.card)
 
     def __str__(self):
@@ -166,28 +166,13 @@ def take_bet():
     return bet_amount
 
 
-#ef hit():
-
-
 def player_hit(handvalue):
     if handvalue < 21:
         hityn = None
         while hityn != 'y'.upper() and hityn != 'n'.upper():
             hityn = str(input(print('Hit? (y/n): '))).upper()
             if hityn == 'y'.upper():
-                new_card = player_hand.add_card()
-                #if new_card[1] == 'Ace ':
-                    #ace_value = None
-                    #while True:
-                     #   try:
-                      #      while ace_value != 1 and ace_value != 11:
-                       #         ace_value = int(input('Choose 1 or 11:\n'))
-                        #    break
-                        #except:
-                        #    print('Enter a valid integer')
-                    #handvalue += ace_value
-                #else:
-                 #   handvalue += values[str(new_card[1])]
+                player_hand.add_card()
             else:
                 print('No hit')
 
@@ -197,17 +182,32 @@ def dealer_hit(handvalue):
         dealer_hand.add_card()
 
 
-def check_ace():
-    ace_value = None
-    while True:
-        try:
-            while ace_value != 1 and ace_value != 11:
-                ace_value = int(input('Choose 1 or 11:\n'))
-            break
-        except:
-            print('Enter a valid integer')
-    return ace_value
+def check_ace(card):
+    if card[1] == 'Ace ':
+        ace_value = None
+        while True:
+            try:
+                while ace_value != 1 and ace_value != 11:
+                    ace_value = int(input('Choose 1 or 11:\n'))
+                break
+            except:
+                print('Enter a valid integer')
+        return ace_value
+    else:
+        return card[4]
 
+
+def dealer_check_ace(card):
+    if card[1] == 'Ace ':
+        if dealer_hand.value < 10:
+            return 11
+        else:
+            return 1
+    else:
+        return card[4]
+
+
+game_state = True
 
 while True:
 
@@ -221,18 +221,26 @@ while True:
 
     round_bet = take_bet()
 
+    round_count = 0
 
-    dealer_hand.add_card()
-    print_dealer_hand(dealer_hand.cards)
+    while True
+        dealer_hand.add_card()
+        dealer_hand.value += dealer_check_ace(dealer_hand.cards[round_count])
+        print_dealer_hand(dealer_hand.cards)
 
-    player_hand.add_card()
-    print_player_hand(player_hand.cards)
+        player_hand.add_card()
+        player_hand.value += check_ace(player_hand.cards[round_count])
+        print_player_hand(player_hand.cards)
 
-    dealer_hand.add_card()
-    print_dealer_hand(dealer_hand.cards)
+        round_count += 1
 
-    player_hand.add_card()
-    print_player_hand(player_hand.cards)
+        if round_count > 1:
+            player_hit()
+            dealer_hit()
+
+        if round_count == 4:
+            break
+
 
 
 

@@ -62,6 +62,7 @@ class Hand():
         self.cards.append(self.new_card)
 
 
+
 class Chips():
     def __init__(self):
         self.total = 100
@@ -171,7 +172,7 @@ def take_bet():
     return bet_amount
 
 
-def player_hit(handvalue):
+def player_hit():
     hityn = None
     while hityn != 'y'.upper() and hityn != 'n'.upper():
         hityn = str(input(print('Hit? (y/n): '))).upper()
@@ -181,10 +182,12 @@ def player_hit(handvalue):
             print('No hit')
 
 
-def dealer_hit(handvalue):
-    if handvalue <= 17 and handvalue < 21:
+def dealer_hit():
+    if dealer_hand.value <= 17 and dealer_hand.value < 21:
         dealer_hand.add_card()
-
+        print('The dealer hits')
+    else:
+        print('The dealer stands')
 
 def check_ace(card):
     if card[1] == 'Ace ':
@@ -197,6 +200,8 @@ def check_ace(card):
             except:
                 print('Enter a valid integer')
         return ace_value
+    else:
+        return card[4]
 
 
 def dealer_check_ace(card):
@@ -205,7 +210,10 @@ def dealer_check_ace(card):
             return 11
         else:
             return 1
+    else:
+        return card[4]
 
+def win_condition():
 
 
 game_state = True
@@ -220,35 +228,46 @@ while True:
 
     player_chips = Chips()
 
-    round_bet = take_bet()
+    #round_bet = take_bet()
 
     round_count = 0
 
     while True:
         dealer_hand.add_card()
-        dealer_hand.value += int(dealer_check_ace(dealer_hand.cards[round_count]))
-        print('DEALER HAND: ROUND {}'.format(round_count))
+        dealer_hand.value += dealer_check_ace(dealer_hand.cards[-1])
+        dealer_hand.add_card()
+        dealer_hand.value += dealer_check_ace(dealer_hand.cards[-1])
+        print('\nDEALER HAND: \n')
         print_dealer_hand(dealer_hand.cards)
         print(dealer_hand.value)
 
         player_hand.add_card()
-        player_hand.value += int(check_ace(player_hand.cards[round_count]))
-        print('PLAYER HAND: ROUND {}'.format(round_count))
+        player_hand.value += check_ace(player_hand.cards[-1])
+        player_hand.add_card()
+        print('\nPLAYER HAND: \n')
         print_player_hand(player_hand.cards)
+        player_hand.value += check_ace(player_hand.cards[-1])
         print(player_hand.value)
 
-        round_count += 1
+        while win_condition == False:
 
-        while round_count > 1:
-            player_hit(player_hand.value)
-            dealer_hit(dealer_hand.value)
-            round_count += 1
+            player_hit()
+            player_hand.value += check_ace(player_hand.cards[-1])
+            print('\nPLAYER HAND: \n')
+            print_player_hand(player_hand.cards)
+            print(player_hand.value)
 
-            if round_count == 4:
-                break
-        if round_count > 4:
-            break
+            dealer_hit()
+            dealer_hand.value += dealer_check_ace(dealer_hand.cards[-1])
+            print('\nDEALER HAND: \n')
+            print_dealer_hand(dealer_hand.cards)
+            print(dealer_hand.value)
 
+
+
+
+
+        break
 
 
 

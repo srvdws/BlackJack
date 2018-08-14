@@ -263,7 +263,8 @@ while True:
 
     player_chips = Chips()
 
-    #round_bet = take_bet()
+    player_chips.bet = take_bet()
+    print('You bet: {}'.format(player_chips.bet))
 
     round_count = 0
 
@@ -302,8 +303,16 @@ while True:
 
             player_wins = bust_check(player_hand.value, dealer_hand.value)
 
-        else:
+        if player_wins is False:
             player_wins = win_condition(player_hand.value, dealer_hand.value)
+            if player_wins is True:
+                player_chips.win_bet()
+            else:
+                player_chips.lose_bet()
+        else:
+            player_chips.win_bet()
+
+
 
 
         break

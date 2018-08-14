@@ -279,6 +279,7 @@ while True:
             hand_val_temp += player_hand.cards[i][4]
 
         player_hand.value = hand_val_temp + check_ace(player_hand.cards[-1])
+
         player_hand.add_card()
         hand_val_temp = 0
         for i in range(0, len(player_hand.cards)):

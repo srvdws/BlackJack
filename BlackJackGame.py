@@ -205,7 +205,7 @@ def check_ace(card):
                 print('Enter a valid integer')
         return ace_value
     else:
-        return card[4]
+        return 0
 
 
 def dealer_check_ace(card):
@@ -218,25 +218,30 @@ def dealer_check_ace(card):
         return 0
 
 
-def win_condition():
-    global dealer_hand
-    global player_hand
-    global game_state
+def calc_value(hand):
+    hand_val_temp = 0
+    for i in range(0, len(hand)):
+        hand_val_temp += hand[i][4]
+    return hand_val_temp
 
-    if dealer_hand.value > player_hand.value:
-        game_state = False
 
-    elif player_hand.value > dealer_hand.value:
-        game_state = False
+#def win_condition(player, dealer):
+ #   global game_state
 
-    elif player_hand.value == dealer_hand.value:
-        game_state = False
+  #  if dealer > player:
+   #     game_state = False
 
-    elif dealer_hand.value > 21:
-        game_state = False
+   # elif player > dealer:
+    #    game_state = False
 
-    elif player_hand.value > 21:
-        game_state = False
+#    elif player == dealer:
+#        game_state = False
+
+ #   elif dealer > 21:
+ #       game_state = False
+
+ #   elif player > 21:
+ #       game_state = False
 
 
 
@@ -258,86 +263,49 @@ while True:
 
     while True:
         dealer_hand.add_card()
-        hand_val_temp = 0
-        for i in range(0, len(dealer_hand.cards)):
-            hand_val_temp += dealer_hand.cards[i][4]
-
-        dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + hand_val_temp
+        dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + calc_value(dealer_hand.cards)
         dealer_hand.add_card()
-        hand_val_temp = 0
-        for i in range(0, len(dealer_hand.cards)):
-            hand_val_temp += dealer_hand.cards[i][4]
-
-        dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + hand_val_temp
+        dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + calc_value(dealer_hand.cards)
         print('\nDEALER HAND: \n')
         print_dealer_hand(dealer_hand.cards)
         print(dealer_hand.value)
 
         player_hand.add_card()
-        hand_val_temp = 0
-        for i in range(0, len(player_hand.cards)):
-            hand_val_temp += player_hand.cards[i][4]
-
-        player_hand.value = hand_val_temp + check_ace(player_hand.cards[-1])
-
+        player_hand.value = check_ace(player_hand.cards[-1]) + calc_value(player_hand.cards)
         player_hand.add_card()
-        hand_val_temp = 0
-        for i in range(0, len(player_hand.cards)):
-            hand_val_temp += player_hand.cards[i][4]
-
-        player_hand.value = hand_val_temp + check_ace(player_hand.cards[-1])
-
+        player_hand.value = check_ace(player_hand.cards[-1]) + calc_value(player_hand.cards)
         print('\nPLAYER HAND: \n')
         print_player_hand(player_hand.cards)
-        player_hand.value += check_ace(player_hand.cards[-1])
         print(player_hand.value)
 
         while game_state is True:
 
             dealer_hit()
-            hand_val_temp = 0
-            for i in range(0, len(dealer_hand.cards)):
-                hand_val_temp += dealer_hand.cards[i][4]
-
-            dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + hand_val_temp
-
+            dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + calc_value(dealer_hand.cards)
             print('\nDEALER HAND: \n')
             print_dealer_hand(dealer_hand.cards)
             print(dealer_hand.value)
 
             player_hit()
-            hand_val_temp = 0
-            for i in range(0, len(player_hand.cards)):
-                hand_val_temp += player_hand.cards[i][4]
-
-            player_hand.value = hand_val_temp + check_ace(player_hand.cards[-1])
-
+            player_hand.value = check_ace(player_hand.cards[-1]) + calc_value(player_hand.cards)
             print('\nPLAYER HAND: \n')
             print_player_hand(player_hand.cards)
             print(player_hand.value)
 
-            win_condition()
-
-
-
-
+            #win_condition(player_hand.value, dealer_hand.value)
 
         break
 
 
 
 
-#player_hand.add_card()
-#player_hand.add_card()
 
-#print_player_hand(player_hand.cards)
-#print(player_hand.value)
 
-#player_hand.add_card()
 
-#print_player_hand(player_hand.cards)
-#print(player_hand.value)
 
-#print(take_bet())
+
+
+
+
 
     break

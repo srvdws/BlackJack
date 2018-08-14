@@ -6,7 +6,7 @@ import random
 
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs ')
 ranks = ('Two ', 'Three ', 'Four', 'Five', 'Six ', 'Seven ', 'Eight ', 'Nine', 'Ten ', 'Jack', 'Queen ', 'King', 'Ace ')
-values = {'Two ': 2, 'Three ': 3, 'Four': 4, 'Five': 5, 'Six ': 6, 'Seven ': 7, 'Eight ': 8, 'Nine': 9, 'Ten ': 10, 'Jack': 10, 'Queen ': 10, 'King': 10, 'Ace ': 11}
+values = {'Two ': 2, 'Three ': 3, 'Four': 4, 'Five': 5, 'Six ': 6, 'Seven ': 7, 'Eight ': 8, 'Nine': 9, 'Ten ': 10, 'Jack': 10, 'Queen ': 10, 'King': 10, 'Ace ': 0}
 
 playing = True
 
@@ -173,6 +173,8 @@ def take_bet():
 
 
 def player_hit():
+    global game_state
+
     hityn = None
     while hityn != 'y'.upper() and hityn != 'n'.upper():
         hityn = str(input(print('Hit? (y/n): '))).upper()
@@ -180,6 +182,8 @@ def player_hit():
             player_hand.add_card()
         else:
             print('No hit')
+            game_state = False
+
 
 
 def dealer_hit():
@@ -211,9 +215,29 @@ def dealer_check_ace(card):
         else:
             return 1
     else:
-        return card[4]
+        return 0
+
 
 def win_condition():
+    global dealer_hand
+    global player_hand
+    global game_state
+
+    if dealer_hand.value > player_hand.value:
+        game_state = False
+
+    elif player_hand.value > dealer_hand.value:
+        game_state = False
+
+    elif player_hand.value == dealer_hand.value:
+        game_state = False
+
+    elif dealer_hand.value > 21:
+        game_state = False
+
+    elif player_hand.value > 21:
+        game_state = False
+
 
 
 game_state = True
@@ -234,34 +258,64 @@ while True:
 
     while True:
         dealer_hand.add_card()
-        dealer_hand.value += dealer_check_ace(dealer_hand.cards[-1])
+        hand_val_temp = 0
+        for i in range(0, len(dealer_hand.cards)):
+            hand_val_temp += dealer_hand.cards[i][4]
+
+        dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + hand_val_temp
         dealer_hand.add_card()
-        dealer_hand.value += dealer_check_ace(dealer_hand.cards[-1])
+        hand_val_temp = 0
+        for i in range(0, len(dealer_hand.cards)):
+            hand_val_temp += dealer_hand.cards[i][4]
+
+        dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + hand_val_temp
         print('\nDEALER HAND: \n')
         print_dealer_hand(dealer_hand.cards)
         print(dealer_hand.value)
 
         player_hand.add_card()
-        player_hand.value += check_ace(player_hand.cards[-1])
+        hand_val_temp = 0
+        for i in range(0, len(player_hand.cards)):
+            hand_val_temp += player_hand.cards[i][4]
+
+        player_hand.value = hand_val_temp + check_ace(player_hand.cards[-1])
         player_hand.add_card()
+        hand_val_temp = 0
+        for i in range(0, len(player_hand.cards)):
+            hand_val_temp += player_hand.cards[i][4]
+
+        player_hand.value = hand_val_temp + check_ace(player_hand.cards[-1])
+
         print('\nPLAYER HAND: \n')
         print_player_hand(player_hand.cards)
         player_hand.value += check_ace(player_hand.cards[-1])
         print(player_hand.value)
 
-        while win_condition == False:
+        while game_state is True:
+
+            dealer_hit()
+            hand_val_temp = 0
+            for i in range(0, len(dealer_hand.cards)):
+                hand_val_temp += dealer_hand.cards[i][4]
+
+            dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + hand_val_temp
+
+            print('\nDEALER HAND: \n')
+            print_dealer_hand(dealer_hand.cards)
+            print(dealer_hand.value)
 
             player_hit()
-            player_hand.value += check_ace(player_hand.cards[-1])
+            hand_val_temp = 0
+            for i in range(0, len(player_hand.cards)):
+                hand_val_temp += player_hand.cards[i][4]
+
+            player_hand.value = hand_val_temp + check_ace(player_hand.cards[-1])
+
             print('\nPLAYER HAND: \n')
             print_player_hand(player_hand.cards)
             print(player_hand.value)
 
-            dealer_hit()
-            dealer_hand.value += dealer_check_ace(dealer_hand.cards[-1])
-            print('\nDEALER HAND: \n')
-            print_dealer_hand(dealer_hand.cards)
-            print(dealer_hand.value)
+            win_condition()
 
 
 

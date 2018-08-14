@@ -225,29 +225,35 @@ def calc_value(hand):
     return hand_val_temp
 
 
-#def win_condition(player, dealer):
- #   global game_state
+def win_condition(player, dealer):
+    if dealer < player <= 21:
+        return True
+    if player < dealer <= 21:
+        return False
+    #if player == dealer:
+        #return False
 
-  #  if dealer > player:
-   #     game_state = False
 
-   # elif player > dealer:
-    #    game_state = False
+def bust_check(player,dealer):
+    global game_state
 
-#    elif player == dealer:
-#        game_state = False
+    if dealer > 21:
+        print('Dealer BUSTS!')
+        game_state = False
+        return True
 
- #   elif dealer > 21:
- #       game_state = False
-
- #   elif player > 21:
- #       game_state = False
-
+    elif player > 21:
+        print('Player BUSTS!')
+        game_state = False
+        return False
 
 
 game_state = True
 
+
 while True:
+
+    player_wins = None
 
     play_deck = Deck()
     play_deck.shuffle()
@@ -286,13 +292,19 @@ while True:
             print_dealer_hand(dealer_hand.cards)
             print(dealer_hand.value)
 
+            player_wins = bust_check(player_hand.value, dealer_hand.value)
+
             player_hit()
             player_hand.value = check_ace(player_hand.cards[-1]) + calc_value(player_hand.cards)
             print('\nPLAYER HAND: \n')
             print_player_hand(player_hand.cards)
             print(player_hand.value)
 
-            #win_condition(player_hand.value, dealer_hand.value)
+            player_wins = bust_check(player_hand.value, dealer_hand.value)
+
+        else:
+            player_wins = win_condition(player_hand.value, dealer_hand.value)
+
 
         break
 

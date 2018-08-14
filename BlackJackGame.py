@@ -69,9 +69,11 @@ class Chips():
         self.bet = 0
 
     def win_bet(self):
+        print('YOU WIN')
         self.total += (self.bet * 2)
 
     def lose_bet(self):
+        print('You lose')
         self.total -= self.bet
 
 
@@ -228,7 +230,9 @@ def calc_value(hand):
 def win_condition(player, dealer):
     if dealer < player <= 21:
         return True
-    if player < dealer <= 21:
+    elif player < dealer <= 21:
+        return False
+    else:
         return False
     #if player == dealer:
         #return False
@@ -269,12 +273,13 @@ while True:
     round_count = 0
 
     while True:
+
         dealer_hand.add_card()
         dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + calc_value(dealer_hand.cards)
         dealer_hand.add_card()
         dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + calc_value(dealer_hand.cards)
         print('\nDEALER HAND: \n')
-        print_dealer_hand(dealer_hand.cards)
+        print_player_hand(dealer_hand.cards)
         print(dealer_hand.value)
 
         player_hand.add_card()
@@ -294,6 +299,8 @@ while True:
             print(dealer_hand.value)
 
             player_wins = bust_check(player_hand.value, dealer_hand.value)
+            if game_state is False:
+                break
 
             player_hit()
             player_hand.value = check_ace(player_hand.cards[-1]) + calc_value(player_hand.cards)
@@ -312,13 +319,13 @@ while True:
         else:
             player_chips.win_bet()
 
-
+        print(player_chips.total)
 
 
         break
 
 
-
+# ace calculated on first draw of an  ace does not work with calculated hand value as dict at top sets ace value as 0
 
 
 

@@ -136,7 +136,7 @@ def print_card(card):
     print('|______________|')
 
 
-def print_blank_card(card):
+def print_blank_card():
     print(' ______________')
     print('|              |')
     print('|/\/\/\/\/\/\/\|')
@@ -159,7 +159,7 @@ def print_player_hand(hand):
 def print_dealer_hand(hand):
     for i in range(0, len(hand)):
         if i == 0:
-            print_blank_card(hand[i])
+            print_blank_card()
 
         else:
             print_card(hand[i])
@@ -192,13 +192,13 @@ def player_hit():
             game_state = False
 
 
-
 def dealer_hit():
     if dealer_hand.value <= 17 and dealer_hand.value < 21:
         dealer_hand.add_card()
         print('The dealer hits')
     else:
         print('The dealer stands')
+
 
 def check_ace(card):
     if card[1] == 'Ace ':

@@ -252,73 +252,73 @@ def bust_check(player,dealer):
 
 
 game_state = True
+player_chips = Chips()
 
+while game_state is True:
 
-while True:
+    player_wins = None
+
+    play_deck = Deck()
+    play_deck.shuffle()
+
+    player_hand = Hand()
+    dealer_hand = Hand()
+
+    player_chips.bet = take_bet()
+    print('You bet: {}'.format(player_chips.bet))
+
+    for i in range(0, 2):
+        dealer_hand.add_card()
+        dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
+
+        player_hand.add_card()
+        player_hand.cards[-1][4] = check_ace(player_hand.cards[-1])
+
+    print('\nDEALER HAND: \n')
+    print_dealer_hand(dealer_hand.cards)
+    print(dealer_hand.calc_value())
+
+    print('\nPLAYER HAND: \n')
+    print_player_hand(player_hand.cards)
+    print(player_hand.calc_value())
 
     while True:
 
-        play_deck = Deck()
-        play_deck.shuffle()
-
-        player_hand = Hand()
-        dealer_hand = Hand()
-
-        player_chips = Chips()
-
-        player_chips.bet = take_bet()
-        print('You bet: {}'.format(player_chips.bet))
-
-        for i in range (0,2):
-            dealer_hand.add_card()
-            dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
-            #print(dealer_hand.calc_value())
-
-            player_hand.add_card()
-            player_hand.cards[-1][4] = check_ace(player_hand.cards[-1])
-            #print(player_hand.calc_value())
-
-
+        dealer_hit()
+        dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
         print('\nDEALER HAND: \n')
         print_dealer_hand(dealer_hand.cards)
         print(dealer_hand.calc_value())
 
+        player_wins = bust_check(player_hand.value, dealer_hand.value)
+        if game_state is False:
+            break
+
+        player_hit()
+        player_hand.cards[-1][4] = check_ace(player_hand.cards[-1])
         print('\nPLAYER HAND: \n')
         print_player_hand(player_hand.cards)
         print(player_hand.calc_value())
 
-        while True:
+        player_wins = bust_check(player_hand.value, dealer_hand.value)
 
-            dealer_hit()
-            dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
-            print('\nDEALER HAND: \n')
-            print_dealer_hand(dealer_hand.cards)
-            print(dealer_hand.calc_value())
-
-            player_wins = bust_check(player_hand.value, dealer_hand.value)
-            if game_state is False:
-                break
-
-            player_hit()
-            player_hand.cards[-1][4] = check_ace(player_hand.cards[-1])
-            print('\nPLAYER HAND: \n')
-            print_player_hand(player_hand.cards)
-            print(player_hand.calc_value())
-
-            player_wins = bust_check(player_hand.value, dealer_hand.value)
-
-        if player_wins is False:
-            player_wins = win_condition(player_hand.value, dealer_hand.value)
-            if player_wins is True:
-                player_chips.win_bet()
-            elif player_wins is None:
-                player_chips.push()
-            elif player_wins is False:
-                player_chips.lose_bet()
-        else:
+    if player_wins is None:
+        player_wins = win_condition(player_hand.value, dealer_hand.value)
+        if player_wins is True:
             player_chips.win_bet()
+        elif player_wins is None:
+            player_chips.push()
+        elif player_wins is False:
+            player_chips.lose_bet()
+    else:
+        player_chips.lose_bet()
 
-        print(player_chips.total)
+    print(player_chips.total)
+
+    play_again = input('do you want to play again (y/n)?\n')
+    if play_again == 'y':
+        continue
+    else:
         break
 
-    #play_again = str(input('do you want to play again (y/n)?\n')
+

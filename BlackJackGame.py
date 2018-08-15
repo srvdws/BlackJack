@@ -81,6 +81,9 @@ class Chips():
         print('You lose')
         self.total -= self.bet
 
+    def push(self):
+        print('PUSH')
+
 
 def print_card(card):
     print(' ______________')
@@ -230,10 +233,8 @@ def win_condition(player, dealer):
         return True
     elif player < dealer <= 21:
         return False
-    else:
-        return False
-    #if player == dealer:
-        #return False
+    elif player == dealer:
+        return None
 
 
 def bust_check(player,dealer):
@@ -255,22 +256,18 @@ game_state = True
 
 while True:
 
-    player_wins = None
-
-    play_deck = Deck()
-    play_deck.shuffle()
-
-    player_hand = Hand()
-    dealer_hand = Hand()
-
-    player_chips = Chips()
-
-    player_chips.bet = take_bet()
-    print('You bet: {}'.format(player_chips.bet))
-
-    round_count = 0
-
     while True:
+
+        play_deck = Deck()
+        play_deck.shuffle()
+
+        player_hand = Hand()
+        dealer_hand = Hand()
+
+        player_chips = Chips()
+
+        player_chips.bet = take_bet()
+        print('You bet: {}'.format(player_chips.bet))
 
         for i in range (0,2):
             dealer_hand.add_card()
@@ -290,7 +287,7 @@ while True:
         print_player_hand(player_hand.cards)
         print(player_hand.calc_value())
 
-        while game_state is True:
+        while True:
 
             dealer_hit()
             dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
@@ -314,25 +311,14 @@ while True:
             player_wins = win_condition(player_hand.value, dealer_hand.value)
             if player_wins is True:
                 player_chips.win_bet()
-            else:
+            elif player_wins is None:
+                player_chips.push()
+            elif player_wins is False:
                 player_chips.lose_bet()
         else:
             player_chips.win_bet()
 
         print(player_chips.total)
-
-
         break
 
-
-
-
-
-
-
-
-
-
-
-
-    break
+    #play_again = str(input('do you want to play again (y/n)?\n')

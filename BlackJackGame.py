@@ -75,7 +75,7 @@ class Chips():
 
     def win_bet(self):
         print('YOU WIN')
-        self.total += (self.bet * 2)
+        self.total += self.bet
 
     def lose_bet(self):
         print('You lose')
@@ -190,20 +190,24 @@ def player_hit():
         hityn = str(input(print('Hit? (y/n): '))).upper()
         if hityn == 'y'.upper():
             player_hand.add_card()
+            return True
         else:
             print('No hit')
             game_state = False
+            return False
 
 
 def dealer_hit():
     if dealer_hand.value <= 17 and dealer_hand.value < 21:
         dealer_hand.add_card()
         print('The dealer hits')
+        return True
     else:
         print('The dealer stands')
-
+        return False
 
 def check_ace(card):
+    global player_hand
     if card[1] == 'Ace ':
         ace_value = None
         while True:
@@ -219,6 +223,7 @@ def check_ace(card):
 
 
 def dealer_check_ace(card):
+    global dealer_hand
     if card[1] == 'Ace ':
         if dealer_hand.value < 10:
             return 11
@@ -237,7 +242,7 @@ def win_condition(player, dealer):
         return None
 
 
-def bust_check(player,dealer):
+def bust_check(player, dealer):
     global game_state
 
     if dealer > 21:
@@ -264,6 +269,8 @@ while game_state is True:
     player_hand = Hand()
     dealer_hand = Hand()
 
+
+
     player_chips.bet = take_bet()
     print('You bet: {}'.format(player_chips.bet))
 
@@ -276,7 +283,7 @@ while game_state is True:
 
     print('\nDEALER HAND: \n')
     print_dealer_hand(dealer_hand.cards)
-    print(dealer_hand.calc_value())
+    dealer_hand.calc_value()
 
     print('\nPLAYER HAND: \n')
     print_player_hand(player_hand.cards)
@@ -285,22 +292,30 @@ while game_state is True:
     while True:
 
         dealer_hit()
-        dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
+        if dealer_hit() is True:
+            dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
+        else:
+            pass
         print('\nDEALER HAND: \n')
         print_dealer_hand(dealer_hand.cards)
-        print(dealer_hand.calc_value())
+        dealer_hand.calc_value()
 
         player_wins = bust_check(player_hand.value, dealer_hand.value)
         if game_state is False:
             break
 
         player_hit()
-        player_hand.cards[-1][4] = check_ace(player_hand.cards[-1])
+        if player_hit() is True:
+            player_hand.cards[-1][4] = check_ace(player_hand.cards[-1])
+        else:
+            pass
         print('\nPLAYER HAND: \n')
         print_player_hand(player_hand.cards)
         print(player_hand.calc_value())
 
         player_wins = bust_check(player_hand.value, dealer_hand.value)
+        if game_state is False:
+            break
 
     if player_wins is None:
         player_wins = win_condition(player_hand.value, dealer_hand.value)
@@ -310,15 +325,22 @@ while game_state is True:
             player_chips.push()
         elif player_wins is False:
             player_chips.lose_bet()
-    else:
+    elif player_wins is False:
         player_chips.lose_bet()
+    else:
+        player_chips.win_bet()
+
+    print(print_player_hand(dealer_hand.cards))
+    print('The DEALER has: {}'.format(dealer_hand.calc_value()))
+    print('You have: {}'.format(player_hand.calc_value()))
 
     print(player_chips.total)
 
     play_again = input('do you want to play again (y/n)?\n')
     if play_again == 'y':
-        continue
+        game_state = True
     else:
         break
 
 
+# winning does not work with chips

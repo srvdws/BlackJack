@@ -61,6 +61,11 @@ class Hand():
         self.new_card = play_deck.deal()
         self.cards.append(self.new_card)
 
+    def calc_value(self):
+        self.value = 0
+        for i in range(0, len(self.cards)):
+            self.value += self.cards[i][4]
+        return self.value
 
 
 class Chips():
@@ -207,7 +212,7 @@ def check_ace(card):
                 print('Enter a valid integer')
         return ace_value
     else:
-        return 0
+        return card[4]
 
 
 def dealer_check_ace(card):
@@ -217,14 +222,7 @@ def dealer_check_ace(card):
         else:
             return 1
     else:
-        return 0
-
-
-def calc_value(hand):
-    hand_val_temp = 0
-    for i in range(0, len(hand)):
-        hand_val_temp += hand[i][4]
-    return hand_val_temp
+        return card[4]
 
 
 def win_condition(player, dealer):
@@ -274,39 +272,41 @@ while True:
 
     while True:
 
-        dealer_hand.add_card()
-        dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + calc_value(dealer_hand.cards)
-        dealer_hand.add_card()
-        dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + calc_value(dealer_hand.cards)
-        print('\nDEALER HAND: \n')
-        print_player_hand(dealer_hand.cards)
-        print(dealer_hand.value)
+        for i in range (0,2):
+            dealer_hand.add_card()
+            dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
+            #print(dealer_hand.calc_value())
 
-        player_hand.add_card()
-        player_hand.value = check_ace(player_hand.cards[-1]) + calc_value(player_hand.cards)
-        player_hand.add_card()
-        player_hand.value = check_ace(player_hand.cards[-1]) + calc_value(player_hand.cards)
+            player_hand.add_card()
+            player_hand.cards[-1][4] = check_ace(player_hand.cards[-1])
+            #print(player_hand.calc_value())
+
+
+        print('\nDEALER HAND: \n')
+        print_dealer_hand(dealer_hand.cards)
+        print(dealer_hand.calc_value())
+
         print('\nPLAYER HAND: \n')
         print_player_hand(player_hand.cards)
-        print(player_hand.value)
+        print(player_hand.calc_value())
 
         while game_state is True:
 
             dealer_hit()
-            dealer_hand.value = dealer_check_ace(dealer_hand.cards[-1]) + calc_value(dealer_hand.cards)
+            dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
             print('\nDEALER HAND: \n')
             print_dealer_hand(dealer_hand.cards)
-            print(dealer_hand.value)
+            print(dealer_hand.calc_value())
 
             player_wins = bust_check(player_hand.value, dealer_hand.value)
             if game_state is False:
                 break
 
             player_hit()
-            player_hand.value = check_ace(player_hand.cards[-1]) + calc_value(player_hand.cards)
+            player_hand.cards[-1][4] = check_ace(player_hand.cards[-1])
             print('\nPLAYER HAND: \n')
             print_player_hand(player_hand.cards)
-            print(player_hand.value)
+            print(player_hand.calc_value())
 
             player_wins = bust_check(player_hand.value, dealer_hand.value)
 
@@ -325,7 +325,6 @@ while True:
         break
 
 
-# ace calculated on first draw of an  ace does not work with calculated hand value as dict at top sets ace value as 0
 
 
 

@@ -200,7 +200,7 @@ def player_hit():
                     return False
             break
         except:
-            print('Please enter Yes (y) or No (n)')
+            print('Please enter (Y)es or (N)o')
 
 def dealer_hit():
     if dealer_hand.value <= 17 and dealer_hand.value < 21:

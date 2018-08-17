@@ -187,16 +187,20 @@ def player_hit():
     global game_state
 
     hityn = None
-    while hityn != 'y'.upper() and hityn != 'n'.upper():
-        hityn = str(input(print('Hit? (y/n): '))).upper()
-        if hityn == 'y'.upper():
-            player_hand.add_card()
-            return True
-        else:
-            print('No hit')
-            game_state = False
-            return False
-
+    while True:
+        try:
+            while hityn != 'y'.upper() and hityn != 'n'.upper():
+                hityn = str(input(print('Hit? (y/n): '))).upper()
+                if hityn == 'y'.upper():
+                    player_hand.add_card()
+                    return True
+                else:
+                    print('No hit')
+                    game_state = False
+                    return False
+            break
+        except:
+            print('Please enter Yes (y) or No (n)')
 
 def dealer_hit():
     if dealer_hand.value <= 17 and dealer_hand.value < 21:
@@ -340,8 +344,8 @@ while game_state is True:
     while True:
         try:
             while play_again != 'y'.upper() and play_again != 'n'.upper():
-                play_again = input('do you want to play again (y/n)?\n')
-                if play_again == 'y':
+                play_again = str(input('do you want to play again (y/n)?\n')).upper()
+                if play_again == 'y'.upper():
                     game_state = True
                 else:
                     game_state = False

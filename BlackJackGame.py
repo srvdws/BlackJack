@@ -75,7 +75,8 @@ class Chips():
 
     def win_bet(self):
         print('YOU WIN')
-        self.total += self.bet
+        self.total -= self.bet
+        self.total += self.bet*2
 
     def lose_bet(self):
         print('You lose')
@@ -269,8 +270,6 @@ while game_state is True:
     player_hand = Hand()
     dealer_hand = Hand()
 
-
-
     player_chips.bet = take_bet()
     print('You bet: {}'.format(player_chips.bet))
 
@@ -291,7 +290,7 @@ while game_state is True:
 
     while True:
 
-        dealer_hit()
+        #dealer_hit()
         if dealer_hit() is True:
             dealer_hand.cards[-1][4] = dealer_check_ace(dealer_hand.cards[-1])
         else:
@@ -304,7 +303,7 @@ while game_state is True:
         if game_state is False:
             break
 
-        player_hit()
+        #player_hit()
         if player_hit() is True:
             player_hand.cards[-1][4] = check_ace(player_hand.cards[-1])
         else:
@@ -340,7 +339,7 @@ while game_state is True:
     if play_again == 'y':
         game_state = True
     else:
-        break
+        game_state = False
 
 
 # winning does not work with chips

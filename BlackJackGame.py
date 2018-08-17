@@ -260,9 +260,11 @@ def bust_check(player, dealer):
 game_state = True
 player_chips = Chips()
 
+
 while game_state is True:
 
     player_wins = None
+    play_again = None
 
     play_deck = Deck()
     play_deck.shuffle()
@@ -335,11 +337,14 @@ while game_state is True:
 
     print(player_chips.total)
 
-    play_again = input('do you want to play again (y/n)?\n')
-    if play_again == 'y':
-        game_state = True
-    else:
-        game_state = False
-
-
-# winning does not work with chips
+    while True:
+        try:
+            while play_again != 'y'.upper() and play_again != 'n'.upper():
+                play_again = input('do you want to play again (y/n)?\n')
+                if play_again == 'y':
+                    game_state = True
+                else:
+                    game_state = False
+            break
+        except:
+            print('Enter a valid response')

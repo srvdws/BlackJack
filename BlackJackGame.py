@@ -168,7 +168,7 @@ def print_dealer_hand(hand):
 
 
 def take_bet(bet):
-    #bet_amount = 0
+    bet_amount = 0
     print('\nYou have ', player_chips.total, 'Chips.')
     while True:
         try:
@@ -178,7 +178,7 @@ def take_bet(bet):
 
         except:
             print('Please enter a valid amount')
-    #return bet_amount
+    return bet_amount
 
 
 def player_hit():

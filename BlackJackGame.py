@@ -167,18 +167,33 @@ def print_dealer_hand(hand):
             print_card(hand[i])
 
 
-def take_bet(bet):
-    bet_amount = 0
+def take_bet():
+
     print('\nYou have ', player_chips.total, 'Chips.')
     while True:
         try:
-            while bet_amount <= 0 or bet_amount > player_chips.total:
-                bet_amount = int(input('Place your bet:\n'))
+            while player_chips.bet <= 0 or player_chips.bet > player_chips.total:
+                player_chips.bet = int(input('Place your bet:\n'))
+                if player_chips.bet > player_chips.total:
+                    print('not enough')
             break
-
         except:
             print('Please enter a valid amount')
-    return bet_amount
+
+    #while True:
+     #   try:
+      #      player_chips.bet = int(input('bet: '))
+      #  except:
+       ##     print('enter an int')
+       # else:
+        #    if player_chips.bet > player_chips.total:
+         #       print('not enough')
+          #  else:
+           #     break
+
+
+
+
 
 
 def player_hit():
@@ -274,7 +289,7 @@ while game_state is True:
     player_hand = Hand()
     dealer_hand = Hand()
 
-    player_chips.bet = take_bet()
+    take_bet()
     print('You bet: {}'.format(player_chips.bet))
 
     for i in range(0, 2):

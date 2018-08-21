@@ -25,8 +25,6 @@ class Card():
         return ''.join(self.card)
 
 
-
-
 class Deck():
     def __init__(self):
         self.deck = []
@@ -58,8 +56,8 @@ class Hand():
         self.new_card = []
 
     def add_card(self):
-        self.new_card = play_deck.deal()
-        self.cards.append(self.new_card)
+        #self.new_card = play_deck.deal()
+        self.cards.append(play_deck.deal())
 
     def calc_value(self):
         self.value = 0
@@ -169,8 +167,8 @@ def print_dealer_hand(hand):
             print_card(hand[i])
 
 
-def take_bet():
-    bet_amount = 0
+def take_bet(bet):
+    #bet_amount = 0
     print('\nYou have ', player_chips.total, 'Chips.')
     while True:
         try:
@@ -180,7 +178,7 @@ def take_bet():
 
         except:
             print('Please enter a valid amount')
-    return bet_amount
+    #return bet_amount
 
 
 def player_hit():

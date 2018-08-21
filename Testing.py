@@ -1,3 +1,8 @@
-mylist = ('1')
-print(mylist[-1])
-print(mylist[0])
+value = 22
+aces = 2
+
+while value > 21 and aces:
+    value -= 10
+    aces -= 1
+
+print(value)

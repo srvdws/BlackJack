@@ -215,9 +215,7 @@ def player_hit():
         except:
             print('Please enter (Y)es or (N)o')
 
-def dealer_hit(
-
-):
+def dealer_hit():
     if dealer_hand.value <= 17 and dealer_hand.value < 21:
         dealer_hand.add_card()
         print('The dealer hits')
